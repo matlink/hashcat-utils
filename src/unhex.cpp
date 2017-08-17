@@ -3,6 +3,11 @@
 #include <algorithm>
 #include <stdexcept>
 
+/**
+ * use like this:
+ * cut -d':' -f2 hashcat.pot | ./unhex > passwords.found
+ */
+
 std::string hex_to_string(const std::string& input)
 {
     static const char* const lut = "0123456789abcdef";
