@@ -31,7 +31,16 @@ std::string hex_to_string(const std::string& input)
     return output;
 }
 
-int main() {
+void usage(){
+        static const std::string usage_str = "Read passwords from stdin and output $HEX[deadbeef] format into ascii if needed";
+        std::cout << usage_str << std::endl;
+}
+
+int main(int argc, char** argv) {
+    if (argc == 2 && strcmp(argv[1], "--help") == 0){
+            usage();
+            return EXIT_SUCCESS;
+    }
     static const std::string hex = "$HEX[";
     for (std::string line; std::getline(std::cin, line);) {
         if ( strcmp(line.substr(0, 5).c_str(), hex.c_str()) == 0 ){
