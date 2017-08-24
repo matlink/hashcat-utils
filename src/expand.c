@@ -3,36 +3,23 @@
 #include <string.h>
 
 
-void expand(char* line, size_t len){
-        int copying = 0;
-        int i = 0;
-        for(; i < len; i++){
-                if (! copying && line[i] != ' '){
-                        continue;
-                }
-                break;
+void expand(char* line){
+        int occ = atoi(strtok(line, " "));
+        const char* word  = strtok(NULL, "\0\n");
+        for(; occ!=0; occ--){
+                printf("%s", word);
         }
-        char occ_str[i];
-        memcpy( occ_str, line, i);
-        int occurences = atoi(occ_str);
-        i++;
-        char* output = (char*) malloc(len-i);
-        for(int j=0; j < (len-i); j++){
-                output[j] = line[j+i];
-        }
-        for(;occurences!=0; occurences--){
-                printf("%s", output);
-        }
+        return;
 }
 
 int main(int argc, char** argv){
         FILE* fp = fopen(argv[1], "r");
         char* line = NULL;
-        size_t len = 0;
+        size_t len;
         ssize_t read;
         if (fp == NULL) { exit(EXIT_FAILURE); }
         while ((read = getline(&line, &len, fp)) != -1) {
-                expand(line, len);
+                expand(line);
         }
         fclose(fp);
         if (line) { free(line); }
