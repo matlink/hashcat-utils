@@ -91,5 +91,11 @@ int main(int argc, char **argv){
                         printf("%s\n", out);
                 }
         }
+
+        for(wordit=0; wordit < nb_words; wordit++){
+                free(words[wordit]);
+        }
+        free(words);
+
         return 0;
 }
