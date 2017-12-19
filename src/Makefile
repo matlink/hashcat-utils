@@ -55,6 +55,7 @@ native:
 	${CC_NATIVE} ${CFLAGS_NATIVE} ${LDFLAGS_NATIVE} -o splitlen.bin splitlen.c
 	${CC_NATIVE} ${CFLAGS_NATIVE} ${LDFLAGS_NATIVE} -o strip-bsr.bin strip-bsr.c
 	${CC_NATIVE} ${CFLAGS_NATIVE} ${LDFLAGS_NATIVE} -o strip-bsn.bin strip-bsn.c
+	${CC_NATIVE} ${CFLAGS_NATIVE} ${LDFLAGS_NATIVE} -o rule_processor.bin rule_processor.c cpu_rules.c
 
 ##
 ## WINDOWS
