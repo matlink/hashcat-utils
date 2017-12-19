@@ -63,25 +63,33 @@ int main(int argc, char **argv){
         FILE *fp = fopen(argv[1], "r");
         if (fp == NULL){
                 fprintf(stderr, "File %s cannot be found\n", argv[1]);
+                fclose(fp);
                 exit(EXIT_FAILURE);
         }
 
         char **words = (char**) malloc(WORD_BUFF * sizeof(char*));
-        int nb_words = 0;
+        size_t wordstab_size = WORD_BUFF;
+        unsigned int nb_words = 0;
         char rule[RP_RULE_BUFSIZ];
-        int rule_len;
+        unsigned int rule_len;
         char in[BLOCK_SIZE];
-        int in_len;
+        unsigned int in_len;
         char out[BLOCK_SIZE];
-        int wordit;
+        unsigned int wordit;
 
         // get every words from stdin in dynamic array
         while((in_len = fgetl(stdin, in))){
                 words[nb_words] = (char*) malloc(in_len * sizeof(char));
-                strcpy(words[nb_words], in);
+                memcpy(words[nb_words], in, in_len);
                 nb_words++;
+                //realloc when array is too small
+                if(nb_words > wordstab_size){
+                        words = (char**) realloc(words, sizeof(char*) * wordstab_size * 2);
+                        wordstab_size *= 2;
+                }
         }
 
+        // take a rule and apply it to every words
         while(!feof (fp)){
                 rule_len = fgetl(fp, rule);
                 if(rule[0] == '#') continue;
@@ -91,6 +99,8 @@ int main(int argc, char **argv){
                         printf("%s\n", out);
                 }
         }
+
+        fclose(fp);
 
         for(wordit=0; wordit < nb_words; wordit++){
                 free(words[wordit]);
